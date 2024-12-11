@@ -1,0 +1,19 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'"
+    X-XSS-Protection = "1; mode=block"
+    # Set rate limiting headers
+    X-RateLimit-Limit = "100"
+    X-RateLimit-Window = "10"
+
+# Add redirect rules to block excessive requests
+[[redirects]]
+  from = "/*"
+  to = "/error.html"
+  status = 429
+  force = true
+  conditions = {Rate-Limited = true}
